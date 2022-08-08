@@ -67,20 +67,22 @@ def send_event(event, bot, args):
 def parse_event(event, bot, args):
     # Action Type
     if event['data']['action'] != "modified":
-        debug_msg("Ignoring action type '%s'. Skipping ..." % event['data']['action'], args)
+        debug_msg("%d - Ignoring action type '%s'. Skipping ..." % (event['id'], event['data']['action']), args)
         return event['id']
     # Event Type
     if event['type'] != "LocalChangeDetected":
-        debug_msg("Filtering out event type 'RemoteChangeDetected'. Skipping...", args)
+        debug_msg("%d - Filtering out event type 'RemoteChangeDetected'. Skipping..." % event['id'], args)
         return event['id']
     # File Type
     if event['data']['type'] != "file":
-        debug_msg("Filtering out non file type events. Skipping...", args)
+        debug_msg("%d - Filtering out non file type events. Skipping..." % event['id'], args)
         return event['id']
     # Folder Label
     if args.label is not None:
         if args.label != event['data']['label']:
-            debug_msg("Labels '%s' and '%s' don't match. Skipping..." % (args.label, event['data']['label']), args)
+            debug_msg("%d - Labels '%s' and '%s' don't match. Skipping..." % (event['id'],
+                                                                              args.label,
+                                                                              event['data']['label']), args)
             return event['id']
     # Movie Filter
     if args.filter_movies:
@@ -89,7 +91,8 @@ def parse_event(event, bot, args):
             # Mimetype not detectable. Skipping...
             return event['id']
         if not event_mimetype[0].startswith('video'):
-            debug_msg("Path '%s' doesn't match video file type. Skipping..." % event['data']['type'], args)
+            debug_msg("%d - Path '%s' doesn't match video file type. Skipping..." % (event['id'],
+                                                                                     event['data']['type']), args)
             return event['id']
     # Send update
     send_event(event, bot, args)

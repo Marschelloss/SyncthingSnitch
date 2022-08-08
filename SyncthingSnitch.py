@@ -115,20 +115,20 @@ def main(args):
         debug_msg("Found last_id '%d' in file '%s'." % (last_id, args.id_file_location), args)
         f.close()
 
-        events = fetch_events(args, last_id)
-        for event in events:
-            debug_msg(event, args)
-            if event['id'] <= last_id:
-                debug_msg("Event with ID '%d' already parsed. Skipping..." % event['id'], args)
-                continue
-            last_id = parse_event(event, bot, args)
-        try:
-            f = open(args.id_file_location, "w")
-            f.write(str(last_id))
-            f.close()
-        except BaseException as e:
-            debug_msg("Error while writing file: %s" % e, args)
-        exit(0)
+    events = fetch_events(args, last_id)
+    for event in events:
+        debug_msg(event, args)
+        if event['id'] <= last_id:
+            debug_msg("Event with ID '%d' already parsed. Skipping..." % event['id'], args)
+            continue
+        last_id = parse_event(event, bot, args)
+    try:
+        f = open(args.id_file_location, "w")
+        f.write(str(last_id))
+        f.close()
+    except BaseException as e:
+        debug_msg("Error while writing file: %s" % e, args)
+    exit(0)
 
 
 if __name__ == '__main__':

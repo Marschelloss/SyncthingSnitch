@@ -162,7 +162,7 @@ if __name__ == '__main__':
     parser.add_argument("-H", "--host", action="store", default="localhost")
 
     # Port
-    parser.add_argument("-p", "--port", action="store", default=8384)
+    parser.add_argument("-p", "--port", type=int, action="store", default=8384)
 
     # API-Key
     parser.add_argument("-a",
@@ -176,6 +176,7 @@ if __name__ == '__main__':
                         "--timeout",
                         action="store",
                         default=10,
+                        type=int,
                         help="Time to wait if no new event exits. Also time between calls made.")
 
     # SSL

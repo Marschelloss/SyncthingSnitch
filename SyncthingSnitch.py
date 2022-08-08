@@ -89,6 +89,8 @@ def parse_event(event, bot, args):
         event_mimetype = mimetypes.guess_type(event['data']['path'])
         if event_mimetype[0] is None:
             # Mimetype not detectable. Skipping...
+            debug_msg("%d - Mimetype of '%s' not detectable. Skipping..." % (event['id'],
+                                                                             event['data']['type']), args)
             return event['id']
         if not event_mimetype[0].startswith('video'):
             debug_msg("%d - Path '%s' doesn't match video file type. Skipping..." % (event['id'],

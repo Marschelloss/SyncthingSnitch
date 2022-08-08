@@ -79,10 +79,10 @@ def parse_event(event, bot, args):
         return event['id']
     # Folder Label
     if args.label is not None:
-        if args.label != event['data']['label']:
-            debug_msg("%d - Labels '%s' and '%s' don't match. Skipping..." % (event['id'],
-                                                                              args.label,
-                                                                              event['data']['label']), args)
+        if not event['data']['label'] in args.label:
+            debug_msg("%d - Label '%s' not in provided list '%s'. Skipping..." % (event['id'],
+                                                                              event['data']['label'],
+                                                                              args.label), args)
             return event['id']
     # Movie Filter
     if args.filter_movies:
@@ -184,7 +184,7 @@ if __name__ == '__main__':
     # Label
     parser.add_argument("-l",
                         "--label",
-                        action="store",
+                        action="append",
                         help="Only show events matching defined label")
 
     # FilterMovies

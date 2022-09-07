@@ -4,7 +4,7 @@ Module Docstring
 """
 
 __author__ = "Marcel Keßler"
-__version__ = "0.1"
+__version__ = "0.2"
 
 import argparse
 import requests
